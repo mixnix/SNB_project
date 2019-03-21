@@ -7,6 +7,12 @@ def standarize(x):
     x = np.nan_to_num(x)
     return x
 
+def scale_target_function(train_results, test_results):
+    divide_index = len(train_results)
+    results = np.append(train_results, test_results, axis=0)
+    divider = max(results)
+    results = np.divide(results, divider)
+    return (results[0:divide_index], results[divide_index:], divider)
 
 def create_dict_from_string_list(values):
     # convert list to set of unique tuples
