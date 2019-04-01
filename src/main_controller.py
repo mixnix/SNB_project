@@ -34,7 +34,8 @@ prepared_train_vector = np.append(train_data, train_results, axis=1)
 prepared_test_vector = np.append(test_data, test_results, axis=1)
 
 
-
+#todo: zobacz czy sa jakies korealcje miedzy zmiennymi i przewidywana cena
+#czytaj ten artykul o naprawieniu swoich sieci neuronowych
 
 
 
