@@ -1,12 +1,5 @@
 from src.neural_network import *
 
-def prepare_example(example):
-    return (np.expand_dims(example[0:-1], axis=1).T, example[-1])
-    # output_vector = [0 for i in range(2)]
-    # output_vector[int(example[-1])] = 1
-    # output_vector = np.array([output_vector])
-    # input_vector = np.array([example[0:-1]])
-    # return input_vector, output_vector
 
 class NeuralNetworkClassifier:
     def __init__(self, train_data, test_data, hidden_neurons=[30], learning_rates=[0.3], epochs=10,
@@ -20,6 +13,14 @@ class NeuralNetworkClassifier:
         self.train_data = train_data
         self.test_data = test_data
         self.epochs = epochs
+
+    def prepare_example(self, example):
+        return (np.expand_dims(example[0:-1], axis=1).T, example[-1])
+        # output_vector = [0 for i in range(2)]
+        # output_vector[int(example[-1])] = 1
+        # output_vector = np.array([output_vector])
+        # input_vector = np.array([example[0:-1]])
+        # return input_vector, output_vector
 
     def train_show_error(self):
         train_error_matrix = []
@@ -76,18 +77,18 @@ class NeuralNetworkClassifier:
             # train network
             rand_permutated_data = np.random.permutation(self.train_data)
             for example in rand_permutated_data:
-                input_vector, output_vector = prepare_example(example)
+                input_vector, output_vector = self.prepare_example(example)
                 network.train(input_vector, output_vector)
 
             # calculate error
             train_error = 0
             for example in self.train_data:
-                input_vector, output_vector = prepare_example(example)
+                input_vector, output_vector = self.prepare_example(example)
                 train_error += network.squared_error(input_vector, output_vector)
 
             test_error = 0
             for example in self.test_data:
-                input_vector, output_vector = prepare_example(example)
+                input_vector, output_vector = self.prepare_example(example)
                 test_error += network.squared_error(input_vector, output_vector)
 
 
@@ -133,7 +134,7 @@ class NeuralNetworkClassifier:
     def one_network_train_accuracy(self, network):
         true_positives = 0
         for example in self.train_data:
-            input_vector, output_vector = prepare_example(example)
+            input_vector, output_vector = self.prepare_example(example)
             classification = network.classify(input_vector)
             if example[-1] == classification:
                 true_positives += 1
@@ -145,7 +146,7 @@ class NeuralNetworkClassifier:
     def one_network_test_accuracy(self, network):
         true_positives = 0
         for example in self.test_data:
-            input_vector, output_vector = prepare_example(example)
+            input_vector, output_vector = self.prepare_example(example)
             classification = network.classify(input_vector)
             if example[-1] == classification:
                 true_positives += 1
