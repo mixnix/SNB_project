@@ -8,10 +8,14 @@ class DataWorker:
         # przyporzadkuj path do zmiennej
         # jesli load fresh jest False to zaladuj dane juz przetworzone z pliku do
         # ktorego je zapisales
+
+        self.out_scale_order = 0
+
         self.path = path
         self.load_data_from_file()
         self.categorize_data()
         self.scale_data()
+
 
     def load_data_from_file(self):
         # loads raw data from file
@@ -91,7 +95,8 @@ class DataWorker:
         return output_part
 
     def scale_target_function(self, train_results):
-        return np.divide(train_results, max(train_results))
+        self.out_scale_order = max(train_results)
+        return np.divide(train_results, self.out_scale_order)
 
 
     def standarize(self, x):

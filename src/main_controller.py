@@ -1,6 +1,6 @@
 import random
 
-from src.neural_network_classifier import *
+from src.NNClassifier import *
 from matplotlib import pyplot as plt
 
 from src.DataWorker import *
@@ -13,42 +13,24 @@ data = dataWorker.get_data()
 prepared_train_vector = data[0:1300]
 prepared_test_vector = data[1300:]
 
-nn_classifier = NeuralNetworkClassifier(prepared_train_vector, prepared_test_vector, hidden_neurons=[5],
-                                        learning_rates=[0.03], epochs=100,
-                                        number_of_inputs=10, number_of_outputs=1)
+nn_classifier = NNClassifier(prepared_train_vector, prepared_test_vector)
 
-# porownam kilka losowych przewidywan z faktycznymi cenami (z test set-u)
-# nie wazne ze przyklady moga sie czasem powtarzac
-random_examples = []
-for i in range(4):
-    random_examples.append(random.choice(prepared_test_vector))
-
-# for now always uses first network in a classifier, will do it better after redesigning architecture of system
-tablica_wynikow = nn_classifier.show_results_for_examples(random_examples)
+train_error_matrix, test_error_matrix = nn_classifier.train_network_get_error()
 
 
+train_error_matrix = np.multiply(train_error_matrix, dataWorker.out_scale_order)
+test_error_matrix = np.multiply(test_error_matrix, dataWorker.out_scale_order)
 
+train_error_tuple = train_error_matrix
+test_error_tuple = test_error_matrix
+plt.figure()
+x_axis_values = range(0, len(train_error_tuple))
+# plt.plot(x_axis_values, train_error_tuple, 'r', x_axis_values, test_error_tuple, 'b')
+train_line, = plt.plot(x_axis_values, train_error_tuple, 'r', label='train')
+test_line, = plt.plot(x_axis_values, test_error_tuple, 'b', label='test')
+plt.legend(handles=[train_line, test_line])
+plt.title('smth smth error')
+plt.ylabel('train error')
+plt.xlabel('epoch')
+plt.show()
 
-train_error_matrix, test_error_matrix = nn_classifier.train_show_error()
-
-#sprawdz accuracy na poczatku
-
-#plot error
-
-
-for i in range(0, len(train_error_matrix)):
-    train_error_tuple = train_error_matrix[i]
-    test_error_tuple = test_error_matrix[i]
-    plt.figure()
-    x_axis_values = range(0,len(train_error_tuple[0]))
-    plt.plot(x_axis_values, train_error_tuple[0], 'r', x_axis_values, test_error_tuple[0], 'b')
-    plt.title(train_error_tuple[1])
-    plt.ylabel('train error')
-    plt.xlabel('epoch')
-    plt.show()
-
-
-# for now always uses first network in a classifier, will do it better after redesigning architecture of system
-tablica_wynikow2 = nn_classifier.show_results_for_examples(random_examples)
-
-print("im done")
