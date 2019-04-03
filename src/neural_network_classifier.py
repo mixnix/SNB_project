@@ -10,12 +10,14 @@ class NeuralNetworkClassifier:
                 self.neural_networks_table.append(neural_network(neurons_number=neurons_number, learning_rate=lrn_rate,
                                                                  number_of_inputs=number_of_inputs,
                                                                  number_of_outputs=number_of_outputs))
+        self.number_of_outputs = number_of_outputs
         self.train_data = train_data
         self.test_data = test_data
         self.epochs = epochs
 
     def prepare_example(self, example):
-        return (np.expand_dims(example[0:-1], axis=1).T, np.expand_dims(example[-1:], axis=1).T)
+        slash_index = self.number_of_outputs
+        return np.expand_dims(example[0:-slash_index], axis=1).T, np.expand_dims(example[-slash_index:], axis=1).T
         # output_vector = [0 for i in range(2)]
         # output_vector[int(example[-1])] = 1
         # output_vector = np.array([output_vector])
