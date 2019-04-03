@@ -15,7 +15,7 @@ class NeuralNetworkClassifier:
         self.epochs = epochs
 
     def prepare_example(self, example):
-        return (np.expand_dims(example[0:-1], axis=1).T, example[-1])
+        return (np.expand_dims(example[0:-1], axis=1).T, np.expand_dims(example[-1:], axis=1).T)
         # output_vector = [0 for i in range(2)]
         # output_vector[int(example[-1])] = 1
         # output_vector = np.array([output_vector])
