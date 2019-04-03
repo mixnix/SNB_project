@@ -63,46 +63,17 @@ class NeuralNetworkClassifier:
         network_string = "learning rate: " + str(network.learning_rate) + " hidden neurons: " + str(network.hidden_neurons)
         return (train_error_vector, network_string), (test_error_vector, network_string)
 
-    def all_networks_train_accuracy(self):
-        accuracy_table = []
-        for nn in self.neural_networks_table:
-            accuracy_table.append(self.one_network_train_accuracy(nn))
-
-        return accuracy_table
-
-    def all_networks_test_accuracy(self):
-        accuracy_table = []
-        for nn in self.neural_networks_table:
-            accuracy_table.append(self.one_network_test_accuracy(nn))
-
-        return accuracy_table
-
-    def one_network_train_accuracy(self, network):
-        true_positives = 0
-        for example in self.train_data:
-            input_vector, output_vector = self.prepare_example(example)
-            classification = network.classify(input_vector)
-            if example[-1] == classification:
-                true_positives += 1
-
-        accuracy = true_positives / len(self.train_data)
-
-        return (accuracy, "learning_rate: " +  str(network.learning_rate) + " hidden neurons: " + str(network.hidden_neurons))
-
-    def one_network_test_accuracy(self, network):
-        true_positives = 0
-        for example in self.test_data:
-            input_vector, output_vector = self.prepare_example(example)
-            classification = network.classify(input_vector)
-            if example[-1] == classification:
-                true_positives += 1
-
-        accuracy = true_positives / len(self.test_data)
-
-        return (accuracy, "learning_rate: " + str(network.learning_rate) + " hidden neurons: " + str(network.hidden_neurons))
 
     # for now always uses first network in a classifier
     def show_results_for_examples(self, examles_vectors):
+        results = []
+        network = self.neural_networks_table[0]
+        for vector in examles_vectors:
+            input_v, output_v = self.prepare_example(vector)
+            results.append((output_v, network.calculateValue(input_v)[0]))
+        return results
+
+    def total_horse_error(self):
         results = []
         network = self.neural_networks_table[0]
         for vector in examles_vectors:

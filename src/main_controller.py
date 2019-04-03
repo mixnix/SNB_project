@@ -1,41 +1,20 @@
 import random
 
-from src.helperfunctions import *
 from src.neural_network_classifier import *
 from matplotlib import pyplot as plt
 
-data = load_preprocess_house_data("../data/house_prices/data.csv")
+from src.DataWorker import *
 
-scale_features = True
-scale_target = True
-
-epochs = 100
-
-scale_factor = 0
-
-####################################
-
-train_data_and_results = data[0:1300]
-test_data_and_results = data[1300:]
-
-train_data = train_data_and_results[:, :-1]
-train_results = train_data_and_results[:, -1:]
-test_data = test_data_and_results[:, :-1]
-test_results = test_data_and_results[:, -1:]
-
-if scale_features:
-    train_data = standarize(train_data)
-    test_data = standarize(test_data)
-
-if scale_target:
-    train_results, test_results, scale_factor = scale_target_function(train_results, test_results)
-
-prepared_train_vector = np.append(train_data, train_results, axis=1)
-prepared_test_vector = np.append(test_data, test_results, axis=1)
+path = "../data/house_prices/data.csv"
+dataWorker = DataWorker(path)
+data = dataWorker.get_data()
 
 #create classifier
+prepared_train_vector = data[0:1300]
+prepared_test_vector = data[1300:]
+
 nn_classifier = NeuralNetworkClassifier(prepared_train_vector, prepared_test_vector, hidden_neurons=[5],
-                                        learning_rates=[0.03], epochs=epochs,
+                                        learning_rates=[0.03], epochs=100,
                                         number_of_inputs=10, number_of_outputs=1)
 
 # porownam kilka losowych przewidywan z faktycznymi cenami (z test set-u)
