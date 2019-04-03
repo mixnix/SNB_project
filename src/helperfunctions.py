@@ -7,12 +7,14 @@ def standarize(x):
     x = np.nan_to_num(x)
     return x
 
+
 def scale_target_function(train_results, test_results):
     divide_index = len(train_results)
     results = np.append(train_results, test_results, axis=0)
     divider = max(results)
     results = np.divide(results, divider)
     return (results[0:divide_index], results[divide_index:], divider)
+
 
 def create_dict_from_string_list(values):
     # convert list to set of unique tuples
@@ -24,6 +26,7 @@ def create_dict_from_string_list(values):
     # create a dict with values from 1 to n where n is length of list
     return dict((unique_list[i - 1], i) for i in range(1, len(unique_list) + 1))
 
+
 def categorize_strings(values_list, conversion_dictionary):
     # Not sure if it catches these values correctly
     if 'NA' in values_list:
@@ -31,7 +34,6 @@ def categorize_strings(values_list, conversion_dictionary):
     for idx, val in enumerate(values_list):
         values_list[idx] = conversion_dictionary[values_list[idx][0]]
     return values_list.astype(float)
-
 
 
 def load_preprocess_house_data(path):

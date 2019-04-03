@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class neural_network:
     def __init__(self, neurons_number=30, learning_rate=0.3, number_of_inputs=64, number_of_outputs=10):
         self.W1 = np.random.uniform(low=0-1, high=1, size=(number_of_inputs, neurons_number))  # first is y and then x
@@ -28,8 +29,6 @@ class neural_network:
     def tanh_derivative(self, x):
         return (1 - (x ** 2))
 
-
-
     def calculateValue(self, inputVector):
         firstLayerNet = np.dot(inputVector, self.W1) + self.B1
         #here we want tang because it has better gradient properties, it is centered around 0
@@ -38,7 +37,6 @@ class neural_network:
         #here we want probability so we want value from range [0, 1]
         output = self.sigmoid(secondLayerNet)
         return output, firstLayerValue
-
 
     def train(self, inputVector, outputVector):
 

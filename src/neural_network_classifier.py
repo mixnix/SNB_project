@@ -32,42 +32,6 @@ class NeuralNetworkClassifier:
 
         return train_error_matrix, test_error_matrix
 
-    # def train_show_accuracy(self):
-    #     train_accuracy_matrix = []
-    #     test_accuracy_matrix = []
-    #     for nn in self.neural_networks_table:
-    #         train_accuracy, test_accuracy = self.train_one_network_accuracy(nn)
-    #         train_accuracy_matrix.append(train_accuracy)
-    #         test_accuracy_matrix.append(test_accuracy)
-    #
-    #     return train_accuracy_matrix, test_accuracy_matrix
-
-    # def train_one_network_accuracy(self,network):
-    #     train_acc_vector = []
-    #     test_acc_vector = []
-    #     # train for specified number of eons
-    #     for i in range(self.epochs):
-    #
-    #         # train network
-    #         rand_permutated_data = np.random.permutation(self.train_data)
-    #         for example in rand_permutated_data:
-    #             # input_vector, output = prepare_example(example)
-    #             input_vector, output = prepare_example(example)
-    #
-    #             network.train(input_vector, output)
-    #
-    #         # calculate error
-    #         train_accuracy = self.get_inner_acc(self.neural_networks_table[0], True)
-    #
-    #         test_accuracy = self.get_inner_acc(self.neural_networks_table[0], False)
-    #
-    #         train_acc_vector.append(train_accuracy)
-    #         test_acc_vector.append(test_accuracy)
-    #
-    #     network_string = "learning rate: " + str(network.learning_rate) + " hidden neurons: " + str(
-    #         network.hidden_neurons)
-    #     return (train_acc_vector, network_string), (test_acc_vector, network_string)
-
     def train_one_network(self, network):
         train_error_vector = []
         test_error_vector = []
@@ -97,25 +61,6 @@ class NeuralNetworkClassifier:
 
         network_string = "learning rate: " + str(network.learning_rate) + " hidden neurons: " + str(network.hidden_neurons)
         return (train_error_vector, network_string), (test_error_vector, network_string)
-
-
-    # def get_inner_acc(self, network, train = True):
-    #     true_positives = 0
-    #     if(train == True):
-    #         dataset = self.train_data
-    #     else:
-    #         dataset = self.test_data
-    #
-    #     for example in dataset:
-    #         input_vector, output_vector = prepare_example(example)
-    #         classification = network.classify(input_vector)
-    #         if example[-1] == classification:
-    #             true_positives += 1
-    #
-    #     accuracy = true_positives / len(dataset)
-    #
-    #     return accuracy
-
 
     def all_networks_train_accuracy(self):
         accuracy_table = []
