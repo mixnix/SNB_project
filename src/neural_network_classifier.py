@@ -57,7 +57,6 @@ class NeuralNetworkClassifier:
                 input_vector, output_vector = self.prepare_example(example)
                 test_error += network.squared_error(input_vector, output_vector)
 
-
             train_error_vector.append(train_error)
             test_error_vector.append(test_error)
 
@@ -102,7 +101,14 @@ class NeuralNetworkClassifier:
 
         return (accuracy, "learning_rate: " + str(network.learning_rate) + " hidden neurons: " + str(network.hidden_neurons))
 
-
+    # for now always uses first network in a classifier
+    def show_results_for_examples(self, examles_vectors):
+        results = []
+        network = self.neural_networks_table[0]
+        for vector in examles_vectors:
+            input_v, output_v = self.prepare_example(vector)
+            results.append((output_v, network.calculateValue(input_v)[0]))
+        return results
 
 
 

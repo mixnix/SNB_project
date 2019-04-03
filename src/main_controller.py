@@ -1,3 +1,5 @@
+import random
+
 from src.helperfunctions import *
 from src.neural_network_classifier import *
 from matplotlib import pyplot as plt
@@ -28,37 +30,25 @@ if scale_features:
 if scale_target:
     train_results, test_results, scale_factor = scale_target_function(train_results, test_results)
 
-
-
 prepared_train_vector = np.append(train_data, train_results, axis=1)
 prepared_test_vector = np.append(test_data, test_results, axis=1)
-
-
-#todo: zobacz czy sa jakies korealcje miedzy zmiennymi i przewidywana cena
-#czytaj ten artykul o naprawieniu swoich sieci neuronowych
-
-
-
-# nn_classifier = NeuralNetworkClassifier(prepared_train_vector, prepared_test_vector, hidden_neurons=[15, 30, 50],
-#                                         learning_rates=[0.03, 0.1, 0.3], epochs=epochs,
-#                                         number_of_inputs=2, number_of_categories=2)
-# train_accuracy, test_accuracy = nn_classifier.train_show_accuracy()
-# for i in range(0, len(train_accuracy)):
-#     train_accuracy_tuple = train_accuracy[i]
-#     test_accuracy_tuple = test_accuracy[i]
-#     plt.figure()
-#     x_axis_values = range(0, len(train_accuracy_tuple[0]))
-#     plt.plot(x_axis_values, train_accuracy_tuple[0], 'r', x_axis_values, test_accuracy_tuple[0], 'b')
-#     plt.title(train_accuracy_tuple[1])
-#     plt.ylabel('accuracy')
-#     plt.xlabel('epoch')
-#     plt.show()
-
 
 #create classifier
 nn_classifier = NeuralNetworkClassifier(prepared_train_vector, prepared_test_vector, hidden_neurons=[5],
                                         learning_rates=[0.03], epochs=epochs,
                                         number_of_inputs=10, number_of_outputs=1)
+
+# porownam kilka losowych przewidywan z faktycznymi cenami (z test set-u)
+# nie wazne ze przyklady moga sie czasem powtarzac
+random_examples = []
+for i in range(4):
+    random_examples.append(random.choice(prepared_test_vector))
+
+# for now always uses first network in a classifier, will do it better after redesigning architecture of system
+tablica_wynikow = nn_classifier.show_results_for_examples(random_examples)
+
+
+
 
 train_error_matrix, test_error_matrix = nn_classifier.train_show_error()
 
@@ -78,11 +68,8 @@ for i in range(0, len(train_error_matrix)):
     plt.xlabel('epoch')
     plt.show()
 
-#test accuracy
-# accuracy_table = nn_classifier.all_networks_train_accuracy()
-# for accuracy_tuple in accuracy_table:
-#     print("train accuracy: " + str(accuracy_tuple[0]) + " " + accuracy_tuple[1])
-#
-# accuracy_table = nn_classifier.all_networks_test_accuracy()
-# for accuracy_tuple in accuracy_table:
-#     print("test accuracy: " + str(accuracy_tuple[0]) + " " + accuracy_tuple[1])
+
+# for now always uses first network in a classifier, will do it better after redesigning architecture of system
+tablica_wynikow2 = nn_classifier.show_results_for_examples(random_examples)
+
+print("im done")
