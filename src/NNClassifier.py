@@ -1,4 +1,4 @@
-from src.neural_network import *
+from src.NeuralNetwork import *
 
 class NNClassifier:
     def __init__(self, train_data, test_data, hidden_neurons=30, learning_rates=0.3, epochs=300,
