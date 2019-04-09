@@ -3,17 +3,18 @@ from matplotlib import pyplot as plt
 
 class NNClassifierProxy:
     def __init__(self, nnClassifier, outScaleOrder):
-        # create reference to classifier
+        # stworz referencje do classifiera
         self.nnClassifier = nnClassifier
         self.outScaleOrder = outScaleOrder
 
     def train(self):
-        # train_error, test_error = self.network.train()
-        # saves it in fields
+        # wywolaj metode trenujacac siec
         self.train_error_matrix, self.test_error_matrix = self.nnClassifier.train_network_get_error()
 
     def paintAverageAccuracyGraph(self):
-        # draws graphs of how error behaved with epochs
+        # graf bledu w kazdym epochu
+        # i z powrotem wyskalowanie ceny do normalnych wartosci by
+        # latwiej mozna bylo zobaczyc o ile sie myli siec (maksymalna wartosc ceny to 750 000
         self.train_error_matrix = np.multiply(self.train_error_matrix, self.outScaleOrder)
         self.test_error_matrix = np.multiply(self.test_error_matrix, self.outScaleOrder)
 
@@ -22,7 +23,7 @@ class NNClassifierProxy:
         train_line, = plt.plot(x_axis_values, self.train_error_matrix, 'r', label='train')
         test_line, = plt.plot(x_axis_values, self.test_error_matrix, 'b', label='test')
         plt.legend(handles=[train_line, test_line])
-        plt.title('smth smth error')
+        plt.title('average accuracy')
         plt.ylabel('train error')
         plt.xlabel('epoch')
         plt.show()

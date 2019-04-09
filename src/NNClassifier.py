@@ -1,6 +1,7 @@
 from src.NeuralNetwork import *
 
 class NNClassifier:
+    # inicjalizacja podstawowych parametrow sieci neuronowych
     def __init__(self, train_data, test_data, hidden_neurons=30, learning_rates=0.3, epochs=100,
                  number_of_inputs=10, number_of_outputs=1):
         self.neural_network = neural_network(neurons_number=hidden_neurons, learning_rate=learning_rates,
@@ -11,11 +12,13 @@ class NNClassifier:
         self.test_data = test_data
         self.epochs = epochs
 
+    # odcina czesc wyjsciowa od wejsciowej
     def prepare_example(self, example):
         # just slashes vector to input vector and output vector
         slash_index = self.number_of_outputs
         return np.expand_dims(example[0:-slash_index], axis=1).T, np.expand_dims(example[-slash_index:], axis=1).T
 
+    # trenuje siec i zwraca blad
     def train_network_get_error(self):
         # iterate over epochs
         train_error_vector = []
@@ -33,20 +36,12 @@ class NNClassifier:
 
         return train_error_vector, test_error_vector
 
-
-
-        # permutate_data()
-        # train_network_one_epoch()
-        # train_network_get_train_error()
-            # append to train_error array
-        # train_network_get_test_error()
-            # append to teset_error array
-
-
+    # losowo miesza przyklady
     def permutate_data(self, data):
         # randomly permutates data
         return np.random.permutation(self.train_data)
 
+    # jeden epoch trenowania sieci, bierze kazdy przyklad i na kazdym przekladzie trenuje
     def train_network_one_epoch(self, data):
         # trains network with every exampmle from data
         # doesnt permutate data before training
@@ -54,6 +49,7 @@ class NNClassifier:
             input_vector, output_vector = self.prepare_example(example)
             self.neural_network.train(input_vector, output_vector)
 
+    # liczy blad dla sieci w danym momencie dla danych treningowych
     def train_network_get_train_error(self):
         # calculates error for whole training set and returns it as one number
             # squared_error
@@ -65,6 +61,7 @@ class NNClassifier:
 
         return train_error / len(self.train_data)
 
+    # liczy blad dla sieci w danym momencie dla danych testowych
     def train_network_get_test_error(self):
         test_error = 0
         for example in self.test_data:
