@@ -2,30 +2,22 @@ import numpy as np
 
 class DataWorker:
 
-    def __init__(self, path, loadFresh = True):
-        # last column is output
-
-        # przyporzadkuj path do zmiennej
-        # jesli load fresh jest False to zaladuj dane juz przetworzone z pliku do
-        # ktorego je zapisales
-
+    # wywolania metod ladujacych i czyszczacych dane
+    def __init__(self, path):
         self.out_scale_order = 0
-
         self.path = path
         self.load_data_from_file()
         self.categorize_data()
         self.scale_data()
 
-
+    # laduje dane z pliku do zmiennej
     def load_data_from_file(self):
         # loads raw data from file
         self.data = np.loadtxt(open(self.path, "rb"), dtype=str, delimiter=",", skiprows=1)
 
+    # wybiera te cechy ktorych bedziemy uzywac
+    # potem wywoluje funkcje któe kategoryzuja je
     def categorize_data(self):
-        # picks some categories of data and
-        # converts them form string to numbers
-        # Extracting columns that we will use
-        # So we will use 9 input values (date will be one value)
         neighborhoodType = self.data[:, 12:13]
         bldgType = self.data[:, 15:16]
         houseStyle = self.data[:, 16:17]
@@ -60,7 +52,7 @@ class DataWorker:
         self.data = data_vector
 
     def categorize_strings(self, values_list, conversion_dictionary):
-        # Not sure if it catches these values correctly
+        # tylko dla pewnosci, zadna kolumna nie ma wartosci pustych na razie
         if 'NA' in values_list:
             print("Tablica zawiera puste wartości")
         for idx, val in enumerate(values_list):
@@ -77,34 +69,39 @@ class DataWorker:
         # create a dict with values from 1 to n where n is length of list
         return dict((unique_list[i - 1], i) for i in range(1, len(unique_list) + 1))
 
+    # skaluje dane
     def scale_data(self):
         scaled_input = self.scale_input()
         scaled_output = self.scale_output()
         self.data = np.append(scaled_input, scaled_output, axis=1)
 
+    # skaluje dane wejsciowe
     def scale_input(self):
         # normalizes input
         input_part = self.data[:, :-1]
         input_part = self.standarize(input_part)
         return input_part
 
+    # skaluje dane wyjsciowe
     def scale_output(self):
         # normalizes output
         output_part = self.data[:, -1:]
         output_part = self.scale_target_function(output_part)
         return output_part
 
+    # implementacja skalownaia danych wyjsciowych
     def scale_target_function(self, train_results):
         self.out_scale_order = max(train_results)
         return np.divide(train_results, self.out_scale_order)
 
-
+    # implementacja skalowania danych wejsciowych
     def standarize(self, x):
         x -= np.mean(x, axis=0)
         x /= np.std(x, axis=0)
         x = np.nan_to_num(x)
         return x
 
+    # zwraca zaladowane i wyczyszczone dane
     def get_data(self):
         # returns list of vectors
         # each vector contains input (beginning fields) and output (fields at the end)
