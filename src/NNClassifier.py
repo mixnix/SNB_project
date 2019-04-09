@@ -1,7 +1,7 @@
 from src.NeuralNetwork import *
 
 class NNClassifier:
-    def __init__(self, train_data, test_data, hidden_neurons=30, learning_rates=0.3, epochs=300,
+    def __init__(self, train_data, test_data, hidden_neurons=30, learning_rates=0.3, epochs=100,
                  number_of_inputs=10, number_of_outputs=1):
         self.neural_network = neural_network(neurons_number=hidden_neurons, learning_rate=learning_rates,
                                                                  number_of_inputs=number_of_inputs,
