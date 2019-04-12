@@ -28,5 +28,32 @@ class NNClassifierProxy:
         plt.xlabel('epoch')
         plt.show()
 
+    # rysuje procentowy blad dla kazdego przykladu w train secie
+    def paintTrainPercentageFinalError(self):
+        self.final_percentage_train_error_matrix = self.nnClassifier.get_final_train_percentage_error_matrix()
 
+        self.final_percentage_train_error_matrix.sort()
 
+        plt.figure()
+        x_axis_values = range(0, len(self.final_percentage_train_error_matrix))
+        train_final_line, = plt.plot(x_axis_values, self.final_percentage_train_error_matrix, 'r', label='train_final')
+        plt.legend(handles=[train_final_line])
+        plt.title('blad dla kazdego przykladu')
+        plt.ylabel('procent')
+        plt.xlabel('przyklad')
+        plt.show()
+
+    # rysuje procentowy blad dla kazdego przykladu w test secie
+    def paintTestPercentageFinalError(self):
+        self.final_percentage_test_error_matrix = self.nnClassifier.get_final_test_percentage_error_matrix()
+
+        self.final_percentage_test_error_matrix.sort()
+
+        plt.figure()
+        x_axis_values = range(0, len(self.final_percentage_test_error_matrix))
+        test_final_line, = plt.plot(x_axis_values, self.final_percentage_test_error_matrix, 'r', label='train_final')
+        plt.legend(handles=[test_final_line])
+        plt.title('blad dla kazdego przykladu')
+        plt.ylabel('procent')
+        plt.xlabel('przyklad')
+        plt.show()

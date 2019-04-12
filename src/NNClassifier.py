@@ -70,3 +70,19 @@ class NNClassifier:
             test_error += abs(float(output_vector - self.neural_network.calculateValue(input_vector)[0]))
         # calculates test error for whole test set and returns it as one number
         return test_error / len(self.test_data)
+
+    # liczy procentowy blad dla kazdego przykladu w train secie
+    def get_final_train_percentage_error_matrix(self):
+        final_train_error = []
+        for example in self.train_data:
+            input_vector, output_vector = self.prepare_example(example)
+            final_train_error.append(abs(float(output_vector - self.neural_network.calculateValue(input_vector)[0]))/output_vector[0][0])
+        return final_train_error
+
+    # liczy procentowy blad dla kazdego przykladu w test secie
+    def get_final_test_percentage_error_matrix(self):
+        final_test_error = []
+        for example in self.test_data:
+            input_vector, output_vector = self.prepare_example(example)
+            final_test_error.append(abs(float(output_vector - self.neural_network.calculateValue(input_vector)[0]))/output_vector[0][0])
+        return final_test_error

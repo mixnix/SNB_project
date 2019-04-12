@@ -25,4 +25,10 @@ nn_proxy.train()
 # narysowanie średniego błędu
 nn_proxy.paintAverageAccuracyGraph()
 
+# narysowanie błędu prcoentwoego dla kazdego przykladu w training set
+nn_proxy.paintTrainPercentageFinalError()
+
+# narysowanie błędu prcoentwoego dla kazdego przykladu w test set
+nn_proxy.paintTestPercentageFinalError()
+
 
