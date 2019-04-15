@@ -91,7 +91,7 @@ class DataWorker:
 
     # implementacja skalownaia danych wyjsciowych
     def scale_target_function(self, train_results):
-        self.out_scale_order = max(train_results)
+        self.out_scale_order = max(train_results) * 1.3
         return np.divide(train_results, self.out_scale_order)
 
     # implementacja skalowania danych wejsciowych

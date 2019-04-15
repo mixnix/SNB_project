@@ -65,4 +65,6 @@ class neural_network:
         layer1_delta = layer1_error *self.sigmoid_derivative(layer1)
 
         self.W2 += layer1.T.dot(layer2_delta) * self.learning_rate
+        self.B2 = self.learning_rate * np.sum(layer2_delta, axis=0, keepdims=True)
         self.W1 += inputVector.T.dot(layer1_delta) * self.learning_rate
+        self.B1 = self.learning_rate * np.sum(layer1_delta, axis=0, keepdims=True)
