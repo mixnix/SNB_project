@@ -17,7 +17,7 @@ prepared_test_vector = data[1300:]
 nn_classifier = NNClassifier(prepared_train_vector, prepared_test_vector)
 
 # stworzenie proxy które będzie przechowywało wykresy i je rysowało
-nn_proxy = NNClassifierProxy(nn_classifier)
+nn_proxy = NNClassifierProxy(nn_classifier, dataWorker.out_scale_order)
 
 # wytrenowanie sieci
 nn_proxy.train()
