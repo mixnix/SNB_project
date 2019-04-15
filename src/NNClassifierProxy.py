@@ -2,10 +2,10 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 class NNClassifierProxy:
-    def __init__(self, nnClassifier, outScaleOrder):
+    def __init__(self, nnClassifier):
         # stworz referencje do classifiera
         self.nnClassifier = nnClassifier
-        self.outScaleOrder = outScaleOrder
+        # self.outScaleOrder = outScaleOrder
 
     def train(self):
         # wywolaj metode trenujacac siec
@@ -15,8 +15,8 @@ class NNClassifierProxy:
         # graf bledu w kazdym epochu
         # i z powrotem wyskalowanie ceny do normalnych wartosci by
         # latwiej mozna bylo zobaczyc o ile sie myli siec (maksymalna wartosc ceny to 750 000
-        self.train_error_matrix = np.multiply(self.train_error_matrix, self.outScaleOrder)
-        self.test_error_matrix = np.multiply(self.test_error_matrix, self.outScaleOrder)
+        # self.train_error_matrix = np.multiply(self.train_error_matrix, self.outScaleOrder)
+        # self.test_error_matrix = np.multiply(self.test_error_matrix, self.outScaleOrder)
 
         plt.figure()
         x_axis_values = range(0, len(self.train_error_matrix))
@@ -57,3 +57,9 @@ class NNClassifierProxy:
         plt.ylabel('procent')
         plt.xlabel('przyklad')
         plt.show()
+
+    def fiveEstateTest(self):
+        for i in range(1, 5):
+            [real_value, calulated_value] = self.nnClassifier.calculateRandomEstate()
+            print("Nieruchomosc: " + str(i) + " prawidłowa: " + str(real_value) + " przewidziana: " + str(
+                calulated_value))

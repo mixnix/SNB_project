@@ -1,8 +1,9 @@
 from src.NeuralNetwork import *
+import random
 
 class NNClassifier:
     # inicjalizacja podstawowych parametrow sieci neuronowych
-    def __init__(self, train_data, test_data, hidden_neurons=6, learning_rates=0.1, epochs=100,
+    def __init__(self, train_data, test_data, hidden_neurons=6, learning_rates=0.1, epochs=10,
                  number_of_inputs=10, number_of_outputs=1):
         self.neural_network = neural_network(neurons_number=hidden_neurons, learning_rate=learning_rates,
                                                                  number_of_inputs=number_of_inputs,
@@ -86,3 +87,10 @@ class NNClassifier:
             input_vector, output_vector = self.prepare_example(example)
             final_test_error.append(abs(float(output_vector - self.neural_network.calculateValue(input_vector)[0]))/output_vector[0][0])
         return final_test_error
+
+    def calculateRandomEstate(self):
+        random_vector = random.choice(self.test_data)
+        input_vector, output_vector = self.prepare_example(random_vector)
+        calculated_output, trash = self.neural_network.calculateValue(input_vector)
+
+        return output_vector, calculated_output
