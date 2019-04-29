@@ -15,8 +15,8 @@ class NNClassifierProxy:
         # graf bledu w kazdym epochu
         # i z powrotem wyskalowanie ceny do normalnych wartosci by
         # latwiej mozna bylo zobaczyc o ile sie myli siec (maksymalna wartosc ceny to 750 000
-        self.train_error_matrix = np.multiply(self.train_error_matrix, self.outScaleOrder)
-        self.test_error_matrix = np.multiply(self.test_error_matrix, self.outScaleOrder)
+        # self.train_error_matrix = np.multiply(self.train_error_matrix, self.outScaleOrder)
+        # self.test_error_matrix = np.multiply(self.test_error_matrix, self.outScaleOrder)
 
         plt.figure()
         x_axis_values = range(0, len(self.train_error_matrix))

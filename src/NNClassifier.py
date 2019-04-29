@@ -58,7 +58,7 @@ class NNClassifier:
         for example in self.train_data:
             input_vector, output_vector = self.prepare_example(example)
             # train_error += self.neural_network.squared_error(input_vector, output_vector)
-            train_error += abs(float(output_vector - self.neural_network.calculateValue(input_vector)[0]))
+            train_error += float(abs(float(output_vector - self.neural_network.calculateValue(input_vector)[0]))/output_vector)
 
         return train_error / len(self.train_data)
 
@@ -68,7 +68,7 @@ class NNClassifier:
         for example in self.test_data:
             input_vector, output_vector = self.prepare_example(example)
             # test_error += self.neural_network.squared_error(input_vector, output_vector)
-            test_error += abs(float(output_vector - self.neural_network.calculateValue(input_vector)[0]))
+            test_error += float(abs(float(output_vector - self.neural_network.calculateValue(input_vector)[0]))/output_vector)
         # calculates test error for whole test set and returns it as one number
         return test_error / len(self.test_data)
 
