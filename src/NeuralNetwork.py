@@ -35,6 +35,14 @@ class neural_network:
     def tanh_derivative(self, x):
         return (1 - (x ** 2))
 
+    def relu_derivative(self, x):
+        x[x<0] = 0
+        x[x>0] = 1
+        return x
+
+    def relu(self, x):
+        return np.maximum(x, 0)
+
     # w tej funkcji liczymy wartość wyjściową sieci nerunowej
     def calculateValue(self, inputVector):
         # mnożymy wejście przez wagi, dodajemy bias i przepuszczamy przez funkcje aktywacji
